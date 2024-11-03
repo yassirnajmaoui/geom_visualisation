@@ -1,3 +1,23 @@
+# Note/idea on this ocntribution
+Enhance the viewer
+  - Discuss format
+    - Idea leave viewing to existing program
+      - stl, ply and vrml
+        > Stl
+          - no color, less good in long term
+        > ply
+          - As color, seems starndad
+          - Created with trimesh create mesh and create ply file
+  - Better viewer
+    - add direction of detectors
+    - view fov
+  - use case to check geo ok?
+  - Extract lut and save it
+  - displaying normalisation
+    - Show relative effeciency, alpha
+
+
+TODO: remove what following?
 # PETSIRD template for use cases
 
 The purpose of this repo is to provide a starting point for developing software that uses PETSIRD.
@@ -41,5 +61,3 @@ This codespace/container will contain all necessary tools, including `yardl` its
   cd ../..
   ```
 3. Start working in either the [`cpp`](cpp/README.md) and/or [`python`](python/README.md) directories.
-
-
