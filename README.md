@@ -1,54 +1,44 @@
 # Note/idea on this ocntribution
 Enhance the viewer
-  - Discuss format
-    - Idea leave viewing to existing program
+  x Discuss format
+    x Idea leave viewing to existing program
       - stl, ply and vrml
         > Stl
           - no color, less good in long term
         > ply
           - As color, seems starndad
           - Created with trimesh create mesh and create ply file
-  - Better viewer
-    - add direction of detectors
-    - view fov
-  - use case to check geo ok?
+  x Better viewer
+    ~ add direction of detectors
+    x view fov
+  - Clean up a little
+
   - Extract lut and save it
   - displaying normalisation
-    - Show relative effeciency, alpha
+    - Show relative effeciency, alpha or color?
+  - Display doi ou material
+  - Crystal intersections, debug feature
+  - Add simplified view
 
 
-TODO: remove what following?
-# PETSIRD template for use cases
+# PETSIRD use case: Scanner viewer extended
 
-The purpose of this repo is to provide a starting point for developing software that uses PETSIRD.
-It is currently mostly needed/useful for C++ development, but is also useful for Python developers
-who want to experiment with development of PETSIRD itself.
+The purpose of this repo is to provide capabilities to reproducea scanner geometry using either the STL or PLY 3D format.
 
 ## Background
 The [Emission Tomography Standardization Initiative (ETSI)](https://etsinitiative.org/)
 is working towards establishing a standard for PET Raw Data, called PETSIRD ("PET ETSI Raw Data").
 More information is on https://github.com/ETSInitiative/PETSIRD.
 
-## How to use this template?
+## Current capabilities
+Some additionnal features are following.
 
-These instructions will use `YourRepoName` for the name of your new repository. Obviously replace it with something appropriate.
+### Field of view viewer
+An option was added to draw a cylinder, giving the capabilities to the user to also show a field of view.
 
-#### Create a new repository based on this template
 
-Easiest is to start from GitHub:
-1. Navigate to the URL of this repo: https://github.com/ETSInitiative/PETSIRDUseCaseTemplate
-2. Click on the `Use this template` button and create your own repo
-3. Pull it to your own local machine and modify
-   1. Search-and-replace all occurences of `PETSIRDUseCaseTemplate` with `YourRepoName`
-   2. Update the README.md to remove references to this template and write something about what your repo is going to do
-   3. Update the `environment.yml`to include what you need. For instance, if you need ROOT, add something like `- root=6.28.0`
-   4. Make some other basic changes and commit
-      ```sh
-      git commit -a -m "Updated template to YourRepoName"
-      git push
-      ```
 
-### Using your repo
+### How to use this repo
 
 1. Open ***your*** repo in [GitHub Codespaces](https://code.visualstudio.com/docs/remote/codespaces) or
 in a [VS Code devcontainer](https://code.visualstudio.com/docs/devcontainers/containers).
