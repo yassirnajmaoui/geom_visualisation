@@ -1,3 +1,4 @@
+#!/bin/env python
 import sys
 import os
 import numpy as np
@@ -61,11 +62,10 @@ def transform_BoxShape(
     )
 
 
-# Function to create a box mesh from eight vertices
-def create_box_from_vertices(vertices):
+def create_box_from_vertices(vertices, color=None):
     # Define faces using the indices of vertices that make up each face
     faces = [
-        [0, 1, 2],
+        [1, 0, 2],
         [0, 2, 3],  # Bottom face
         [4, 5, 6],
         [4, 6, 7],  # Top face
@@ -81,6 +81,11 @@ def create_box_from_vertices(vertices):
 
     # Create and return a Trimesh object
     box = trimesh.Trimesh(vertices=vertices, faces=faces)
+    if color is not None:
+        #v_color = np.array([color[0],color[1],color[2], 50] * len(vertices)).astype(np.uint8)
+        #box.visual.vertex_colors = v_color
+        f_color = np.array([color[0],color[1],color[2], 50]).astype(np.uint8)
+        box.visual.face_colors = f_color
     return box
 
 
@@ -118,13 +123,21 @@ if __name__ == "__main__":
         for time_block in reader.read_time_blocks():
             pass
 
+        crystal_color = np.array([10,50,0],dtype=np.uint8)
+
+        detector_efficiencies = header.scanner.detection_efficiencies.det_el_efficiencies
+        detector_efficiencies = np.mean(detector_efficiencies, axis=1)
+
         crystals = []
         # draw all crystals
         for rep_module in header.scanner.scanner_geometry.replicated_modules:
-            det_el = rep_module.object.detecting_elements
-            for mod_transform in rep_module.transforms:
-                for rep_volume in det_el:
-                    for transform in rep_volume.transforms:
+            det_el = rep_module.object.detecting_elements # Get all the detecting elements
+            for mod_i in range(len(rep_module.transforms)): # For each transformation of the module
+                mod_transform = rep_module.transforms[mod_i]
+                for rep_volume in det_el: # For each detector in the module
+                    num_det_in_module = len(rep_volume.transforms)
+                    for det_i in range(num_det_in_module): # For each transformation in the detector
+                        transform = rep_volume.transforms[det_i]
                         box: petsird.BoxShape = transform_BoxShape(
                             mult_transforms([mod_transform, transform]),
                             rep_volume.object.shape,
@@ -132,7 +145,8 @@ if __name__ == "__main__":
                         corners = []
                         for boxcorner in box.corners:
                             corners.append(boxcorner.c)
-                        crystals.append(create_box_from_vertices(corners))
+                        color = crystal_color * detector_efficiencies[mod_i*num_det_in_module + det_i]
+                        crystals.append(create_box_from_vertices(corners, color))
 
         combined = trimesh.util.concatenate(crystals)
         combined.export(output_fname)
